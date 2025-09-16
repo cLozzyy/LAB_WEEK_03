@@ -1,22 +1,15 @@
 package com.example.lab_week_03
 
-import android.content.Context
+import androidx.fragment.app.activityViewModels
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 
 class ListFragment : Fragment(), View.OnClickListener {
 
-    private lateinit var coffeeListener: CoffeeListener
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is CoffeeListener) coffeeListener = context
-        else throw RuntimeException("$context must implement CoffeeListener")
-    }
+    private val vm: CoffeeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,7 +24,5 @@ class ListFragment : Fragment(), View.OnClickListener {
         ).forEach { it.setOnClickListener(this) }
     }
 
-    override fun onClick(v: View) {
-        coffeeListener.onSelected(v.id)
-    }
+    override fun onClick(v: View) { vm.select(v.id) }
 }
